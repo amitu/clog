@@ -32,7 +32,7 @@ To publish to web, create an account on cloudant.com and update .couchapprc with
 }
 ```
 
-Modify <cloudant-user> and <cloudant-password>. And then do a `make deploy`. On
+Modify \<cloudant-user\> and \<cloudant-password\>. And then do a `make deploy`. On
 Cloudant admin you can setup vhost by going to "Account" -> "Virtual Hosts". In
 Hostname, pick any domain name you have control over, eg db.amitu.com, in path
 use the same value we used locally: /clog/\_design/clog/\_rewrite.
