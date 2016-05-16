@@ -4,7 +4,7 @@ rapydscript=../../node_modules/rapydscript-ng/bin/rapydscript
 babel=../../node_modules/.bin/babel --plugins transform-react-jsx --presets es2015
 
 TEMPDIR := $(shell mktemp -d)
-DEPS = templates/index.js .deps _attachments/style.css _attachments/script.js
+DEPS = .deps templates/index.js _attachments/style.css _attachments/script.js
 DEPS_TO_CLEAN = templates/index.js _attachments/style.css _attachments/script.js
 
 dev: $(DEPS)
