@@ -1,0 +1,8 @@
+.couchapprc
+*.pyj-cached
+templates/*.js
+rep.json
+.sass-cache
+.deps
+_attachments/style.css
+_attachments/script.js

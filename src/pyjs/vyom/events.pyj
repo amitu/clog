@@ -1,0 +1,124 @@
+# from __python__ import dict_literals, overload_getitem
+# -*- coding: utf-8 -*-
+
+# import vyom.types
+from vyom import NotPassed
+
+
+def merge(o1, o2):
+    o = {}
+    for key in o1:
+        if o1.hasOwnProperty(key):
+            o[key] = o1[key]
+    for key in o2:
+        if o2.hasOwnProperty(key):
+            o[key] = o2[key]
+    return o
+
+
+def onlyone(*args):
+    found = False
+    for arg in args:
+        if found and arg:
+            return False
+        if arg:
+            found = True
+    return True
+
+
+def ObservableList(ival=None):
+    value = ival
+    connections = list()
+
+    lovable = def (
+        val=NotPassed, replace=True, append=False, extend=False, prepend=False,
+        prextend=False
+    ):
+        nonlocal value
+        if val is NotPassed:
+            return value
+
+        assert onlyone(replace, append, extend, prepend, prextend)
+
+        ovalue = value
+        if replace:
+            value = val
+        else:
+            value = merge(ovalue, val)
+
+        for fn in connections:
+            fn(value, ovalue)
+
+
+def Observable(val=None):
+    # TODO: type is inspired by React's propType
+    # look at React's documentation to see all types
+    # and possibly how to implement the checks.
+
+    # it is optional feature, and call
+    # vyom.setup(check_types=True) to activate it
+
+    value = val
+    connections = list()
+
+    ovable = def (val=NotPassed, replace=False, delta=False, how="default"):
+        nonlocal value
+        if val is NotPassed:
+            return value
+
+        ovalue = value
+        if replace:
+            value = val
+        else:
+            value = merge(ovalue, val)
+
+        for fn in connections:
+            fn(value, ovalue, delta, how)
+
+    ovable.replace = def (data, delta=NotPassed, how="replace"):
+        if delta is NotPassed:
+            delta = data
+        ovable(data, replace=True, delta=data, how=how)
+        return ovable
+
+    ovable.update = def (data, how="update"):
+        ovable(data, replace=False, delta=data, how=how)
+        return ovable
+
+    ovable.append = def (elem):
+        data = ovable()
+        data.push(elem)
+        ovable.replace(data, delta=elem, how="append")
+        return ovable
+
+    ovable.extend = def (elems):
+        data = ovable()
+        Array.prototype.push.call(data, elems)
+        ovable.replace(elems, delta=elems, how="extend")
+        return ovable
+
+    ovable.prextend = def (elems):
+        data = ovable()
+        # Array.prototype.push.call(data, elems)
+        # TODO: implement this
+        ovable.replace(elems, delta=elems, how="prextend")
+        return ovable
+
+    ovable.prepend = def (elem):
+        data = ovable()
+        data.splice(0, 0, elem)
+        ovable.replace(data, delta=elem, how="prepend")
+        return ovable
+
+    ovable.connect = def (fn, bind=NotPassed, name=""):
+        connections.append(fn)
+        fn.connection_name = name
+
+        return {
+            "name": name,
+            "remove": def ():
+                connections.remove(fn)
+        }
+
+    ovable.is_observable = True
+    return ovable

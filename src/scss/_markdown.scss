@@ -1,0 +1,12 @@
+@import "settings";
+
+.markdown {
+    h1 {
+        color: $color-dark;
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
+    p {
+        margin-bottom: 0.75rem;
+    }
+}

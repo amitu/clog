@@ -1,0 +1,40 @@
+# from __python__ import dict_literals, overload_getitem
+from vyom import Exception
+
+
+class InvalidType(Exception):
+    pass
+
+
+class String:
+    @staticmethod
+    def is_valid(val):
+        # TODO: implement this
+        pass
+
+    @staticmethod
+    def is_required(val):
+        String.valid(val)
+        if not val:
+            raise InvalidType()
+
+class Number:
+    @staticmethod
+    def is_valid(val):
+        # TODO: implement this
+        pass
+
+    @staticmethod
+    def is_integer(val):
+        # TODO: implement this
+        pass
+
+
+def Any(val):
+    pass
+
+class Array:
+    @staticmethod
+    def is_valid(val):
+        # TODO: implement this
+        pass

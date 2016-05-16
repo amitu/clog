@@ -1,0 +1,22 @@
+[
+	{
+		"from": "images/*",
+		"to": "images/*"
+	},
+	{
+		"from": "favicon.ico",
+		"to": "favicon.ico"
+	},
+	{
+		"from": "style.css",
+		"to": "style.css"
+	},
+	{
+		"from": "script.js",
+		"to": "script.js"
+	},
+	{
+	    "from": "",
+	    "to": "_show/welcome"
+	}
+]

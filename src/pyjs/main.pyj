@@ -1,0 +1,6 @@
+from vyom.utils import init
+
+def main():
+	console.log("all ready")
+
+init(init)

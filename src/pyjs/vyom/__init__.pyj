@@ -1,0 +1,50 @@
+# from __python__ import dict_literals, overload_getitem
+# -*- coding: utf-8 -*-
+
+
+class Exception(Error):
+    def __init__(self, message):
+        self.message = message
+
+
+def NotPassed():
+	pass
+
+
+NotPassed = new NotPassed()
+
+
+def value(o):
+    if o and o.is_observable:
+        return o()
+    return o
+
+
+class ReactyWidget:
+    def __init__(self, parent, component, data, evts):
+        if not evts:
+            evts = {}
+        self.component = component
+        self.parent = parent
+        self.evts = evts
+        self.evts.init = self.init.bind(self)
+        self.data = data
+
+        if self.data.is_observable:
+            self.data.connect(self.rerender.bind(self))
+
+    def init(self, robj):
+        self.robj = robj
+        if self.parent and self.parent.post_create:
+            self.parent.post_create()
+
+    def rerender(self, data):
+        if not self.robj:
+            console.log("rerender called before self.robj was set")
+            return
+        if self.robj.isMounted():
+            self.robj.setState(data)
+
+    def render(self):
+        self.evts.state = value(self.data)
+        return React.createElement(self.component, self.evts)

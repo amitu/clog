@@ -1,0 +1,90 @@
+# from __python__ import dict_literals, overload_getitem
+# -*- coding: utf-8 -*-
+
+from vyom import Exception
+
+
+def get_data_type(elem):
+    return jQuery(elem).data("type")
+
+
+def get_data_args(elem):
+    # TODO: not every browser has .dataset
+    args = elem.dataset.args
+    if args:
+        args = "({" + args + "})"
+        args = eval(args)
+    else:
+        args = {}
+    return args
+
+
+def get_module(name):
+    modules = _$rapyd$_modules if _$rapyd$_modules else ρσ_modules
+    return modules[name]
+
+
+def get_ctor(name):
+    last_dot = name.lastIndexOf(".")
+
+    if last_dot == -1:
+        return get_module(name) or window[name]
+
+    mod = name.substring(0, last_dot)
+    obj = name.substring(last_dot+1, name.length)
+    mod = get_module(mod) or window[mod]
+
+    if not mod:
+        return None
+
+    return mod[obj]
+
+
+class UnknownWidget(Exception):
+    pass
+
+
+class NotASlot(Exception):
+    pass
+
+
+BYID = {}
+BYELEM = {}
+CUR_ID = 1
+
+
+def parse(node=None):
+    nonlocal CUR_ID
+
+    if node is None:
+        node = document.body
+
+    for elem in Array.prototype.slice.call(
+        node.getElementsByTagName('*')
+    ):
+        dtype = get_data_type(elem)
+        if not dtype:
+            continue
+        ctor = get_ctor(dtype)
+        if not ctor:
+            raise UnknownWidget(dtype + " is not a widget class")
+        args = get_data_args(elem)
+        auto_id = False
+        if not elem.id:
+            auto_id = True
+            elem.id = "rid_" + CUR_ID
+            CUR_ID += 1
+        args.elem = elem
+        instance = new ctor(args)
+        ReactDOM.render(instance.render(), args.elem)
+        BYID[elem.id] = instance
+        BYELEM[elem] = instance
+        window[elem.id] = instance
+
+
+def by_id(nid):
+    return BYID[nid]
+
+
+def by_node(node):
+    return BYELEM[node]

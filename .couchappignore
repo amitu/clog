@@ -1,0 +1,17 @@
+[
+  // filenames matching these regexps will not be pushed to the database
+  // uncomment to activate; separate entries with ","
+  ".*~$",
+  ".*\\.swp$",
+  ".*\\.bak$",
+  ".*\\.pyj-cached$",
+  ".*\\.pyj$",
+  ".*node_modules.*",
+  "bin/*",
+  "src/*",
+  ".DS_Store",
+  ".sass-cache",
+  ".couchapprc",
+  "rep.json",
+  ".deps"
+]

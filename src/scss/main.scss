@@ -1,0 +1,97 @@
+@import "settings";
+
+body {
+    background: $color-bg;
+    color: $color-dark;
+    min-width: 450px;
+}
+
+table {
+    margin-top: 2em;
+    margin-left: $left-gap;
+}
+
+a {
+    color: $color-dark;
+}
+
+a:visited {
+    color: $color-dark;
+}
+
+header {
+    background: $color-dark;
+    color: $color-normal;
+    a {
+        color: $color-normal;
+    }
+    a:visited {
+        color: $color-normal;
+    }
+    a:first-child{
+        font-size: 26px;
+        display: inline-block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    a:nth-child(2) {
+        font-size: 15px;
+        margin-left: 10px;
+        position: relative;
+        top: -2px;
+        font-family: $font-light;
+    }
+
+    a:nth-child(3) {
+        font-size: 16px;
+        float: right;
+        display: inline-block;
+        margin-right: 20px;
+        margin-top: 18px;
+    }
+
+    padding-left: $left-gap;
+}
+
+p.data {
+    display: none;
+    margin-top: 20px;
+    padding: 10px 20px 10px $left-gap;
+    background: $color-dark;
+    //border: 2px solid $color-normal;
+    //color: $color-normal;
+    color: white;
+    a {
+        color: $color-colorful;
+    }
+    a:visited {
+        color: $color-colorful;
+    }
+}
+
+.main {
+    color: $color-dark;
+    margin-left: $left-gap;
+
+    h1, h2 {
+        color: $color-dark
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+    p {
+        width: 40rem;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+}
+
+.focussed {
+    border: 1px solid $color-dark;
+}
+
+@import "markdown";

@@ -1,0 +1,37 @@
+# from __python__ import dict_literals, overload_getitem
+# -*- coding: utf-8 -*-
+import vyom
+
+
+class Controller:
+    def __init__(self, data, evts={}):
+        self.data = data
+        self.evts = evts
+        self.widget = None
+        self.init()
+
+    def init(self):
+        pass
+
+    def postCreate(self):
+        pass
+
+    def render(self):
+        if not self.widget:
+            console.log(
+                "Controller.render() called before .widget is initialised."
+            )
+            return
+        return self.widget.render()
+
+    def create_widget(self, cls, data, evts):
+        return vyom.ReactyWidget(self, cls, data, evts)
+
+    def emit(self, signal, data, evt):
+        if self.evts and self.evts[signal]:
+            self.evts[signal](data, evt)
+
+
+class PTController(Controller):
+    def init(self):
+        self.widget = self.create_widget(self.component, self.data, self.evts)
